@@ -44,10 +44,8 @@ h1 em{font-style:italic;color:var(--or)}
 @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
 .ig{margin-bottom:1rem}
 input[type=text]{width:100%;background:rgba(255,255,255,.04);border:1.5px solid rgba(123,167,255,.2);border-radius:14px;padding:.85rem 1rem;color:var(--blanc);font-family:"DM Sans",sans-serif;font-size:1rem;outline:none;transition:border-color .2s}
-input::placeholder{color:var(--gris)}
-input:focus{border-color:var(--bc)}
-input.correct{border-color:var(--vert)}
-input.wrong{border-color:var(--rouge);animation:shake .4s ease}
+input::placeholder{color:var(--gris)}input:focus{border-color:var(--bc)}
+input.correct{border-color:var(--vert)}input.wrong{border-color:var(--rouge);animation:shake .4s ease}
 .fb{display:none;padding:.8rem 1rem;border-radius:12px;margin-bottom:1rem;font-size:.85rem;line-height:1.5}
 .fb.success{display:block;background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.25);color:#86EFAC}
 .fb.error{display:block;background:rgba(248,113,113,.08);border:1px solid rgba(248,113,113,.25);color:#FCA5A5}
@@ -56,6 +54,7 @@ input.wrong{border-color:var(--rouge);animation:shake .4s ease}
 .btn:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(59,111,232,.45)}
 .btn:active{transform:translateY(0)}
 .btn.pink{background:linear-gradient(135deg,#9333ea,#ec4899)}
+.btn.green{background:linear-gradient(135deg,#065f46,var(--vert))}
 .pw{width:100%;margin-bottom:1.4rem}
 .pl{display:flex;justify-content:space-between;font-size:.76rem;color:var(--gris);margin-bottom:.45rem}
 .pt{height:4px;background:rgba(255,255,255,.08);border-radius:99px;overflow:hidden}
@@ -79,26 +78,35 @@ input.wrong{border-color:var(--rouge);animation:shake .4s ease}
 .iitem.icorrect{border-color:var(--vert);background:rgba(74,222,128,.08)}
 .iitem.iwrong{border-color:var(--rouge);background:rgba(248,113,113,.08);animation:shake .4s ease}
 .iitem.irev{border-color:rgba(232,201,122,.5);background:rgba(232,201,122,.06);color:var(--or)}
-/* PUZZLE SLIDING */
-.puz-wrap{margin-bottom:1rem}
-.puz-info{font-size:.78rem;color:var(--gris);text-align:center;margin-bottom:.6rem}
-.puz-grid{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);gap:3px;border-radius:12px;overflow:hidden;width:100%;aspect-ratio:1;touch-action:none}
-.puz-tile{position:relative;overflow:hidden;cursor:pointer;border-radius:4px;background:rgba(59,111,232,.15);border:1px solid rgba(123,167,255,.1);transition:transform .1s}
-.puz-tile:active{transform:scale(.96)}
-.puz-tile.empty{background:rgba(13,27,62,.8);border:2px dashed rgba(123,167,255,.25);cursor:default}
-.puz-tile.empty:active{transform:none}
-.puz-tile img{width:300%;height:300%;object-fit:cover;display:block;pointer-events:none}
-.puz-tile.correct-pos{border-color:rgba(74,222,128,.4);box-shadow:inset 0 0 0 2px rgba(74,222,128,.2)}
-.puz-solved{text-align:center;padding:1rem;background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.25);border-radius:14px;color:#86EFAC;margin-bottom:1rem;display:none}
+/* PUZZLE DRAG & DROP 2x2 */
+.puz-container{display:flex;gap:1.2rem;margin-bottom:1rem;align-items:flex-start}
+.puz-pieces{display:grid;grid-template-columns:1fr 1fr;gap:6px;flex:1}
+.puz-board{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:6px;flex:1;border:2px solid rgba(123,167,255,.2);border-radius:12px;padding:6px;background:rgba(0,0,0,.2)}
+.puz-piece{width:100%;aspect-ratio:1;border-radius:8px;overflow:hidden;cursor:grab;border:2px solid rgba(123,167,255,.2);transition:all .2s;position:relative;background:rgba(59,111,232,.1)}
+.puz-piece:active{cursor:grabbing;transform:scale(1.05);z-index:10;border-color:var(--or)}
+.puz-piece.dragging{opacity:.5;border-color:var(--or)}
+.puz-piece.placed{cursor:default;border-color:rgba(74,222,128,.4);background:rgba(74,222,128,.05)}
+.puz-piece img{width:200%;height:200%;object-fit:cover;display:block;pointer-events:none}
+.puz-slot{width:100%;aspect-ratio:1;border-radius:8px;border:2px dashed rgba(123,167,255,.25);background:rgba(0,0,0,.15);transition:all .2s;position:relative;display:flex;align-items:center;justify-content:center}
+.puz-slot.drag-over{border-color:var(--or);background:rgba(232,201,122,.08)}
+.puz-slot.filled{border-style:solid;border-color:rgba(74,222,128,.4)}
+.puz-slot .slot-num{font-size:.65rem;color:rgba(123,167,255,.4);font-weight:600}
+.puz-labels{display:flex;justify-content:space-between;font-size:.72rem;color:var(--gris);margin-bottom:.4rem}
+.puz-info{font-size:.78rem;color:var(--gris);text-align:center;margin-bottom:.8rem}
 /* CAMERA */
-.cam-info{font-size:.85rem;color:var(--bc);text-align:center;margin-bottom:.8rem;min-height:1.2rem;line-height:1.4}
+.cam-info{font-size:.85rem;color:var(--bc);text-align:center;margin-bottom:.8rem;min-height:1.4rem;line-height:1.4}
 .cam-zone{width:100%;aspect-ratio:4/3;border-radius:16px;overflow:hidden;background:#000;margin-bottom:.8rem;border:2px solid rgba(123,167,255,.2);position:relative;display:none}
 .cam-zone video{width:100%;height:100%;object-fit:cover}
-.cam-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none}
+.cam-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;flex-direction:column;gap:.8rem}
 .cam-frame-box{width:55%;aspect-ratio:3/2;border:2px solid rgba(255,255,255,.7);border-radius:8px;box-shadow:0 0 0 9999px rgba(0,0,0,.4)}
-.scan-line{position:absolute;top:50%;left:22%;right:22%;height:2px;background:linear-gradient(90deg,transparent,var(--bc),transparent);animation:sl 2s ease-in-out infinite}
-@keyframes sl{0%{transform:translateY(-50px);opacity:0}20%{opacity:1}80%{opacity:1}100%{transform:translateY(50px);opacity:0}}
-.cam-hint{position:absolute;bottom:.6rem;left:0;right:0;text-align:center;font-size:.72rem;color:rgba(255,255,255,.55)}
+/* Circular progress */
+.cam-circle{width:72px;height:72px}
+.cam-circle circle{fill:none;stroke-width:6;stroke-linecap:round}
+.cam-circle .bg{stroke:rgba(255,255,255,.15)}
+.cam-circle .fg{stroke:var(--vert);stroke-dasharray:188;stroke-dashoffset:188;transition:stroke-dashoffset .9s linear;transform:rotate(-90deg);transform-origin:50% 50%}
+.cam-count{position:absolute;font-size:1.4rem;font-weight:700;color:white;top:50%;left:50%;transform:translate(-50%,-50%)}
+.cam-circle-wrap{position:relative;display:flex;align-items:center;justify-content:center}
+.cam-hint{font-size:.72rem;color:rgba(255,255,255,.55);text-align:center;padding:0 1rem}
 /* FINALE */
 .fi{font-size:4rem;margin-bottom:1.4rem;display:block;animation:bounce 1s ease infinite}
 @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
@@ -183,92 +191,78 @@ var steps=[
    ans:"A l'anniversaire d'une amie en commun",
    ok:"A l'anniversaire d'Orphee... le debut de tout !",
    ko:"C'etait lors d'une fete, pour une amie que vous avez en commun !"},
-
   {cat:"couple",type:"input",emoji:"&#128153;",photo:2,
    q:"Comment Esteban t'appelle-t-il ?",
    ans:"loulou",accepted:["loulou"],
    ok:"Loulou ! Toujours et encore.",
    ko:"C'est un surnom en deux syllabes, tres doux !"},
-
   {cat:"culture",type:"qcm",emoji:"&#127918;",photo:3,
    q:"Dans Red Dead Redemption 2, de quelle maladie meurt Arthur Morgan ?",
    opts:[{e:"&#129432;",t:"Cholera"},{e:"&#129978;",t:"Tuberculose"},{e:"&#128567;",t:"Typhus"},{e:"&#129978;",t:"Pneumonie"}],
    ans:"Tuberculose",
    ok:"La tuberculose. Un des persos les plus attachants du jeu video.",
    ko:"C'est une maladie pulmonaire tres connue au Far West !"},
-
   {cat:"special",type:"intrus",emoji:"&#128649;",photo:null,
    q:"Tu prends la ligne H tous les jours... Une de ces stations N'EXISTE PAS sur ton trajet. Laquelle ?",
    items:["Enghien-les-Bains","Epinay - Villetaneuse","Domont - Les Pins","La Barre - Ormesson","Cernay","Franconville - le Plessis-Bouchard"],
    intrus:"Domont - Les Pins",
    ok:"Domont - Les Pins n'existe pas ! Tu l'as eu ou tu t'es fait avoir ?",
    ko:"Regarde bien... une de ces stations ne figure sur aucun panneau que tu as jamais vu !"},
-
   {cat:"couple",type:"qcm",emoji:"&#127843;",photo:4,
    q:"Notre tout premier rendez-vous, c'etait ou ?",
    opts:[{e:"&#127981;",t:"Au Sakura Sushi a Lille"},{e:"&#127843;",t:"Au J&J Sushi a Tourcoing"},{e:"&#127828;",t:"Dans un McDo a Roubaix"},{e:"&#127843;",t:"Au Sushi Shop a Tourcoing"}],
    ans:"Au J&J Sushi a Tourcoing",
    ok:"Le J&J Sushi a Tourcoing... un souvenir qui nous appartient.",
    ko:"C'etait un resto japonais dans le Nord !"},
-
   {cat:"couple",type:"qcm",emoji:"&#128085;",photo:5,
    q:"La premiere soiree ensemble, Esteban etait un peu trop festard ! Pourquoi tu l'as accompagne a sa voiture avant d'aller en boite ?",
    opts:[{e:"&#128179;",t:"Il avait oublie son portefeuille"},{e:"&#128085;",t:"Il devait changer de chemise"},{e:"&#128222;",t:"Il devait rappeler sa mere"},{e:"&#128273;",t:"Il cherchait ses cles"}],
    ans:"Il devait changer de chemise",
    ok:"La chemise de rechange dans la voiture... heureusement que t'etais la !",
    ko:"Il avait eu un petit accident vestimentaire... qu'est-ce qu'on change quand on sort ?"},
-
   {cat:"couple",type:"input",emoji:"&#128663;",photo:6,
    q:"Et d'ailleurs, c'etait quelle voiture ce soir-la ?",
    ans:"golf",accepted:["golf","golf 4","vw golf","volkswagen golf"],
    ok:"La Golf 4 ! La premiere voiture d'Esteban. Un classique.",
    ko:"C'est une voiture allemande tres connue... une Volkswagen !"},
-
   {cat:"special",type:"camera",emoji:"&#128248;",photo:null,
-   q:"Mini-defi ! Pose ta fourchette et ton couteau du midi cote a cote, puis clique sur Demarrer et montre-les a la camera pendant 3 secondes.",
-   ok:"Couverts detectes ! Bien joue, tu peux continuer.",
+   q:"Mini-defi ! Pose ta fourchette et ton couteau du midi cote a cote. Clique sur Demarrer et garde-les dans le cadre pendant 5 secondes.",
+   ok:"Couverts valides ! Tu peux continuer.",
    ko:""},
-
   {cat:"special",type:"puzzle",emoji:"&#127922;",photo:null,
-   q:"Remets les pieces dans le bon ordre ! Clique sur une piece puis sur la case vide pour les echanger.",
+   q:"Glisse les pieces dans les bonnes cases pour reconstituer le souvenir !",
    ok:"Puzzle resolu ! Un beau souvenir a nous.",
    ko:""},
-
   {cat:"culture",type:"qcm",emoji:"&#9875;",photo:7,
    q:"Vous regardez le live action One Piece. Dans la saison 2, quel arc est adapte ?",
    opts:[{e:"&#127984;",t:"L'arc Baratie et Arlong Park"},{e:"&#127958;",t:"L'arc Alabasta"},{e:"&#127758;",t:"L'arc Loguetown"},{e:"&#127867;",t:"L'arc Whisky Peak"}],
    ans:"L'arc Alabasta",
    ok:"L'arc Alabasta - Vivi, le desert, et Crocodile. Un des meilleurs arcs !",
    ko:"C'est l'arc avec une princesse, un desert et un Shichibukai comme antagoniste..."},
-
   {cat:"couple",type:"qcm",emoji:"&#127794;",photo:8,
    q:"Au Gros Chene en Alsace, vous vous etes perdus en foret apres un pique-nique. Comment s'appelait la joggeuse qui vous a aide a retrouver votre chemin ?",
    opts:[{e:"&#127939;",t:"Martine"},{e:"&#127939;",t:"Sandra"},{e:"&#127939;",t:"Sonia"},{e:"&#127939;",t:"Christine"}],
    ans:"Sonia",
    ok:"Sonia ! La joggeuse providentielle. On oublie pas Sonia !",
    ko:"C'est un prenom que vous lui avez donne sur le moment... ca commence par S !"},
-
   {cat:"couple",type:"qcm",emoji:"&#128197;",photo:null,
    q:"Sans regarder ton telephone ni ton agenda... c'est quelle date notre anniversaire ? (Interdiction de tricher !)",
    opts:[{e:"&#127800;",t:"Le 5 mai"},{e:"&#127800;",t:"Le 7 mai"},{e:"&#127800;",t:"Le 9 mai"},{e:"&#127800;",t:"Le 12 mai"}],
    ans:"Le 7 mai",
    ok:"Le 7 mai ! Meme si tu hesites toujours entre le 7 et le 9 ahahahah",
    ko:"Vraiment ? T'as pas le droit de regarder ton telephone hein !"},
-
   {cat:"culture",type:"qcm",emoji:"&#128141;",photo:null,
    q:"Tu travailles chez Myrtille Beck. Dans quel quartier de Paris se trouve la boutique ?",
    opts:[{e:"&#128205;",t:"Le Marais (75003)"},{e:"&#128205;",t:"Saint-Germain-des-Pres (75006)"},{e:"&#128205;",t:"South Pigalle (75009)"},{e:"&#128205;",t:"Montmartre (75018)"}],
    ans:"South Pigalle (75009)",
    ok:"South Pigalle, rue Henry Monnier - l'endroit ou tu travailles !",
    ko:"C'est un quartier branche du nord de Paris... tu devrais connaitre ca !"},
-
   {cat:"couple",type:"qcm",emoji:"&#9992;",photo:null,
    q:"Combien de temps a dure votre relation a distance avant de vous retrouver ?",
    opts:[{e:"&#128336;",t:"6 mois"},{e:"&#128336;",t:"1 an"},{e:"&#128336;",t:"2 ans"},{e:"&#128336;",t:"3 ans"}],
    ans:"2 ans",
    ok:"2 longues annees de distance... et vous avez tout surpasse.",
    ko:"C'etait long, mais moins que 3 ans et plus qu'un an !"},
-
   {cat:"couple",type:"input",emoji:"&#127959;",photo:null,
    q:"Derniere question ! Dans quel arrondissement de Paris se trouve le restaurant ou vous allez ce soir ?",
    ans:"9",accepted:["9","09","75009","9eme","neuvieme"],
@@ -276,9 +270,11 @@ var steps=[
    ko:"C'est dans le nord de Paris, cote Pigalle. Un chiffre entre 8 et 10 !"}
 ];
 
-var cur=0,tries=3,stepDone=false;
-var camStream=null,camTimer=null;
-var puzState=[],puzSel=null;
+var cur=0, tries=3, stepDone=false;
+var camStream=null, camTimer=null;
+var dragSrc=null;
+// Puzzle state: slotContents[slotIdx] = pieceIdx or null
+var slotContents=[null,null,null,null];
 
 // STARS
 (function(){
@@ -296,7 +292,6 @@ function showScreen(id){
   var el=document.getElementById(id);
   el.style.animation="none";el.offsetHeight;el.style.animation="";el.classList.add("active");
 }
-
 document.getElementById("btn-start").addEventListener("click",function(){cur=0;renderStep();showScreen("s-question");});
 document.getElementById("btn-next").addEventListener("click",function(){
   stopCam();cur++;
@@ -312,13 +307,12 @@ function renderStep(){
   document.getElementById("slbl").textContent="Etape "+(cur+1)+" / "+steps.length;
   document.getElementById("spct").textContent=pct+"%";
   var badge=document.getElementById("badge");
-  var labels={couple:"Sur nous",culture:"Culture",special:"Mini-jeu"};
-  badge.textContent=labels[step.cat]+" #"+(cur+1);
+  badge.textContent={couple:"Sur nous",culture:"Culture",special:"Mini-jeu"}[step.cat]+" #"+(cur+1);
   badge.className="badge "+step.cat;
   document.getElementById("qt").innerHTML="<span class='emo'>"+step.emoji+"</span>"+step.q;
   var fb=document.getElementById("fb");fb.className="fb";fb.textContent="";
   var bn=document.getElementById("btn-next");bn.style.display="none";
-  bn.textContent=cur<steps.length-1?"Etape suivante &#8594;":"Decouvrir ma surprise !";
+  bn.innerHTML=cur<steps.length-1?"Etape suivante &#8594;":"Decouvrir ma surprise &#127881;";
   var phc=document.getElementById("phc");phc.innerHTML="";
   if(step.photo!==null&&step.photo!==undefined&&PHOTOS[step.photo]){
     var fr=document.createElement("div");fr.className="phf";
@@ -373,7 +367,7 @@ function checkQCM(btn,choice,step){
       stepDone=true;
       all.forEach(function(o){o.disabled=true;o.style.pointerEvents="none";if(o.dataset.val===step.ans)o.classList.add("revealed");});
       showFb("info","Plus d essais ! Reponse : "+step.ans);showNext();
-    }else{showFb("error",step.ko+" ("+tries+" essai"+(tries>1?"s":"")+" restant"+(tries>1?"s":"")+")"); }
+    }else showFb("error",step.ko+" ("+tries+" essai"+(tries>1?"s":"")+" restant"+(tries>1?"s":"")+")");
   }
 }
 
@@ -439,120 +433,184 @@ function checkIntrus(div,choice,step){
         if(sp&&sp.textContent===step.intrus)d.classList.add("irev");
       });
       showFb("info","C'etait : "+step.intrus+" - Ca n'existe pas sur la ligne H !");showNext();
-    }else{showFb("error","Pas celle-la ! ("+tries+" essai"+(tries>1?"s":"")+" restant"+(tries>1?"s":"")+")"); }
+    }else showFb("error","Pas celle-la ! ("+tries+" essai"+(tries>1?"s":"")+" restant"+(tries>1?"s":"")+")");
   }
 }
 
-// PUZZLE - vraie mécanique sliding puzzle
+// ── PUZZLE DRAG & DROP 2x2 ────────────────────────────────────────────────
 function buildPuzzle(step,body){
-  // 3x3 grid, tile 8 = empty
-  // state: array of 9, value = original position (0-7), 8 = empty
-  puzState=[0,1,2,3,4,5,6,7,8];
-  // shuffle by doing random valid moves
-  var empty=8;
-  for(var s=0;s<200;s++){
-    var neighbors=getNeighbors(empty);
-    var swap=neighbors[Math.floor(Math.random()*neighbors.length)];
-    puzState[empty]=puzState[swap];puzState[swap]=8;empty=swap;
-  }
-  puzSel=null;
+  slotContents=[null,null,null,null];
+  dragSrc=null;
+
+  // Shuffled piece order
+  var order=[0,1,2,3].sort(function(){return Math.random()-.5;});
 
   var info=document.createElement("div");info.className="puz-info";info.id="puz-info";
-  info.textContent="Clique sur une piece pour la selectionner, puis sur la case vide pour la placer.";
+  info.textContent="Fais glisser les pieces dans les bonnes cases !";
   body.appendChild(info);
 
-  var grid=document.createElement("div");grid.className="puz-grid";grid.id="puz-grid";
-  body.appendChild(grid);
+  var labels=document.createElement("div");labels.className="puz-labels";
+  labels.innerHTML="<span>&#127922; Pieces a placer</span><span>&#128204; Cases cibles</span>";
+  body.appendChild(labels);
 
-  var solved=document.createElement("div");solved.className="puz-solved";solved.id="puz-solved";
-  solved.textContent="Puzzle resolu ! Beau travail.";body.appendChild(solved);
+  var container=document.createElement("div");container.className="puz-container";
 
-  renderPuzzle(step);
+  // PIECES ZONE
+  var piecesZone=document.createElement("div");piecesZone.className="puz-pieces";piecesZone.id="puz-pieces";
+  order.forEach(function(pieceIdx){
+    piecesZone.appendChild(makePiece(pieceIdx,step));
+  });
+  container.appendChild(piecesZone);
+
+  // BOARD ZONE (slots)
+  var board=document.createElement("div");board.className="puz-board";board.id="puz-board";
+  for(var s=0;s<4;s++){
+    board.appendChild(makeSlot(s,step));
+  }
+  container.appendChild(board);
+  body.appendChild(container);
+
+  // Preview hint (tiny)
+  var hint=document.createElement("div");hint.style.cssText="font-size:.7rem;color:var(--gris);text-align:center;margin-top:.4rem";
+  hint.textContent="Ordre : haut-gauche, haut-droite, bas-gauche, bas-droite";
+  body.appendChild(hint);
 }
 
-function getNeighbors(idx){
-  var r=Math.floor(idx/3),c=idx%3,n=[];
-  if(r>0)n.push(idx-3);if(r<2)n.push(idx+3);
-  if(c>0)n.push(idx-1);if(c<2)n.push(idx+1);
-  return n;
+function makePiece(pieceIdx,step){
+  var tile=document.createElement("div");
+  tile.className="puz-piece";
+  tile.id="piece-"+pieceIdx;
+  tile.draggable=true;
+  tile.dataset.piece=pieceIdx;
+  var row=Math.floor(pieceIdx/2),col=pieceIdx%2;
+  var img=document.createElement("img");img.src=PIMG;
+  img.style.cssText="width:200%;height:200%;margin-left:"+(-col*100)+"%;margin-top:"+(-row*100)+"%;pointer-events:none";
+  tile.appendChild(img);
+  // Desktop drag
+  tile.addEventListener("dragstart",function(e){
+    dragSrc={type:"piece",idx:pieceIdx};
+    e.dataTransfer.effectAllowed="move";
+    setTimeout(function(){tile.classList.add("dragging");},0);
+  });
+  tile.addEventListener("dragend",function(){tile.classList.remove("dragging");});
+  // Touch support
+  tile.addEventListener("touchstart",function(e){dragSrc={type:"piece",idx:pieceIdx};tile.classList.add("dragging");},false);
+  tile.addEventListener("touchend",function(e){
+    tile.classList.remove("dragging");
+    var t=e.changedTouches[0];
+    var el=document.elementFromPoint(t.clientX,t.clientY);
+    if(el){var slot=el.closest(".puz-slot");if(slot)dropOnSlot(parseInt(slot.dataset.slot),step);}
+  },false);
+  return tile;
 }
 
-function renderPuzzle(step){
-  var grid=document.getElementById("puz-grid");if(!grid)return;
-  grid.innerHTML="";
-  for(var i=0;i<9;i++){
-    (function(pos){
-      var val=puzState[pos];
-      var tile=document.createElement("div");
-      if(val===8){
-        tile.className="puz-tile empty";
-      }else{
-        tile.className="puz-tile";
-        if(val===pos)tile.classList.add("correct-pos");
-        if(puzSel===pos)tile.style.outline="3px solid var(--or)";
-        var img=document.createElement("img");img.src=PIMG;
-        var row=Math.floor(val/3),col=val%3;
-        img.style.cssText="width:300%;height:300%;margin-left:"+(-col*100)+"%;margin-top:"+(-row*100)+"%";
-        tile.appendChild(img);
-        tile.addEventListener("click",function(){handlePuzClick(pos,step);});
-      }
-      grid.appendChild(tile);
-    })(i);
+function makeSlot(slotIdx,step){
+  var slot=document.createElement("div");
+  slot.className="puz-slot";slot.id="slot-"+slotIdx;slot.dataset.slot=slotIdx;
+  var num=document.createElement("span");num.className="slot-num";num.textContent=(slotIdx+1);slot.appendChild(num);
+  slot.addEventListener("dragover",function(e){e.preventDefault();slot.classList.add("drag-over");});
+  slot.addEventListener("dragleave",function(){slot.classList.remove("drag-over");});
+  slot.addEventListener("drop",function(e){
+    e.preventDefault();slot.classList.remove("drag-over");
+    dropOnSlot(slotIdx,step);
+  });
+  return slot;
+}
+
+function dropOnSlot(slotIdx,step){
+  if(!dragSrc)return;
+  if(slotContents[slotIdx]!==null){
+    // Swap back piece to pieces zone
+    returnPiece(slotContents[slotIdx]);
+  }
+  // If dragging from another slot
+  if(dragSrc.type==="slot"){
+    slotContents[dragSrc.idx]=null;
+    var oldSlot=document.getElementById("slot-"+dragSrc.idx);
+    if(oldSlot){oldSlot.innerHTML="";var n=document.createElement("span");n.className="slot-num";n.textContent=(dragSrc.idx+1);oldSlot.appendChild(n);oldSlot.classList.remove("filled");}
+  }
+  // Place piece in slot
+  slotContents[slotIdx]=dragSrc.idx;
+  var pieceEl=document.getElementById("piece-"+dragSrc.idx);
+  if(pieceEl)pieceEl.parentNode.removeChild(pieceEl);
+  var slot=document.getElementById("slot-"+slotIdx);
+  if(slot){
+    slot.innerHTML="";
+    var clone=makePieceInSlot(dragSrc.idx,slotIdx,step);
+    slot.appendChild(clone);slot.classList.add("filled");
+  }
+  dragSrc=null;
+  checkPuzzleDone(step);
+}
+
+function makePieceInSlot(pieceIdx,slotIdx,step){
+  var tile=document.createElement("div");
+  tile.style.cssText="width:100%;height:100%;overflow:hidden;border-radius:6px;cursor:grab";
+  tile.dataset.piece=pieceIdx;
+  var row=Math.floor(pieceIdx/2),col=pieceIdx%2;
+  var img=document.createElement("img");img.src=PIMG;
+  img.style.cssText="width:200%;height:200%;margin-left:"+(-col*100)+"%;margin-top:"+(-row*100)+"%;pointer-events:none;display:block";
+  tile.appendChild(img);
+  // Can drag back out
+  tile.draggable=true;
+  tile.addEventListener("dragstart",function(e){
+    dragSrc={type:"slot",idx:slotIdx};
+    e.dataTransfer.effectAllowed="move";
+    setTimeout(function(){tile.style.opacity=".4";},0);
+  });
+  tile.addEventListener("dragend",function(){tile.style.opacity="1";});
+  // Touch
+  tile.addEventListener("touchstart",function(e){dragSrc={type:"slot",idx:slotIdx};tile.style.opacity=".4";},false);
+  tile.addEventListener("touchend",function(e){
+    tile.style.opacity="1";
+    var t=e.changedTouches[0];
+    var el=document.elementFromPoint(t.clientX,t.clientY);
+    if(el){var sl=el.closest(".puz-slot");if(sl)dropOnSlot(parseInt(sl.dataset.slot),step);else{returnPiece(pieceIdx);slotContents[slotIdx]=null;var s2=document.getElementById("slot-"+slotIdx);if(s2){s2.innerHTML="";var n=document.createElement("span");n.className="slot-num";n.textContent=(slotIdx+1);s2.appendChild(n);s2.classList.remove("filled");}}}
+    dragSrc=null;
+  },false);
+  return tile;
+}
+
+function returnPiece(pieceIdx){
+  var pz=document.getElementById("puz-pieces");
+  if(pz&&!document.getElementById("piece-"+pieceIdx)){
+    pz.appendChild(makePiece(pieceIdx,steps[cur]));
   }
 }
 
-function handlePuzClick(pos,step){
-  if(stepDone)return;
-  var val=puzState[pos];
-  if(val===8)return; // clicking empty does nothing
-
-  // find empty
-  var emptyPos=-1;
-  for(var i=0;i<9;i++){if(puzState[i]===8){emptyPos=i;break;}}
-
-  var nb=getNeighbors(emptyPos);
-  if(nb.indexOf(pos)!==-1){
-    // Adjacent to empty: swap directly
-    puzState[emptyPos]=puzState[pos];puzState[pos]=8;
-    puzSel=null;
-    renderPuzzle(step);
-    checkPuzzleSolved(step);
-  }else{
-    // Select this tile
-    puzSel=pos;
-    renderPuzzle(step);
-    document.getElementById("puz-info").textContent="Piece selectionnee ! Clique sur la case vide adjacente pour la deplacer.";
+function checkPuzzleDone(step){
+  var allFilled=slotContents.every(function(v){return v!==null;});
+  var correct=slotContents.every(function(v,i){return v===i;});
+  if(allFilled){
+    if(correct){
+      stepDone=true;
+      document.getElementById("puz-info").textContent="Parfait ! La photo est reconstituee.";
+      showFb("success",step.ok);showNext();
+    }else{
+      var rightCount=slotContents.filter(function(v,i){return v===i;}).length;
+      document.getElementById("puz-info").textContent=rightCount+" piece"+(rightCount>1?"s":"")+" bien placee"+(rightCount>1?"s":"")+" sur 4. Pas tout a fait !";
+      showFb("error","Pas encore ! Essaie de repositionner les pieces.");
+    }
   }
 }
 
-function checkPuzzleSolved(step){
-  var solved=true;
-  for(var i=0;i<9;i++){if(puzState[i]!==i){solved=false;break;}}
-  if(solved){
-    stepDone=true;
-    document.getElementById("puz-solved").style.display="block";
-    document.getElementById("puz-info").textContent="Parfait !";
-    showFb("success",step.ok);showNext();
-  }else{
-    var correct=0;for(var i=0;i<9;i++){if(puzState[i]===i)correct++;}
-    document.getElementById("puz-info").textContent=correct+" piece"+(correct>1?"s":"")+" bien placee"+(correct>1?"s":"")+" sur 9.";
-  }
-}
-
-// CAMERA
+// ── CAMERA ──────────────────────────────────────────────────────────────────
 function buildCamera(step,body){
   var info=document.createElement("div");info.className="cam-info";info.id="cam-info";
-  info.textContent="Appuie sur Demarrer pour activer la camera.";
-  body.appendChild(info);
+  info.textContent="Appuie sur Demarrer pour activer la camera.";body.appendChild(info);
 
   var zone=document.createElement("div");zone.className="cam-zone";zone.id="cam-zone";
   var vid=document.createElement("video");vid.id="cam-vid";vid.autoplay=true;vid.playsInline=true;vid.muted=true;
   zone.appendChild(vid);
+
+  // Overlay with frame + circle progress
   var ov=document.createElement("div");ov.className="cam-overlay";
-  var fr=document.createElement("div");fr.className="cam-frame-box";
-  var sl=document.createElement("div");sl.className="scan-line";fr.appendChild(sl);ov.appendChild(fr);zone.appendChild(ov);
-  var hint=document.createElement("div");hint.className="cam-hint";hint.textContent="Centre la fourchette et le couteau dans le cadre";
-  zone.appendChild(hint);body.appendChild(zone);
+  var fr=document.createElement("div");fr.className="cam-frame-box";ov.appendChild(fr);
+  var cw=document.createElement("div");cw.className="cam-circle-wrap";
+  cw.innerHTML='<svg class="cam-circle" viewBox="0 0 64 64"><circle class="bg" cx="32" cy="32" r="28"/><circle class="fg" id="cam-fg" cx="32" cy="32" r="28"/></svg><span class="cam-count" id="cam-count">5</span>';
+  cw.style.display="none";cw.id="cam-circle-wrap";ov.appendChild(cw);
+  var hint=document.createElement("div");hint.className="cam-hint";hint.textContent="Centre fourchette + couteau dans le cadre";ov.appendChild(hint);
+  zone.appendChild(ov);body.appendChild(zone);
 
   var btnCam=document.createElement("button");btnCam.className="btn pink";btnCam.id="btn-cam";
   btnCam.innerHTML="&#128248; Demarrer la camera";
@@ -561,52 +619,59 @@ function buildCamera(step,body){
 }
 
 function startCam(step){
-  var btnCam=document.getElementById("btn-cam");
+  var btn=document.getElementById("btn-cam");
   var info=document.getElementById("cam-info");
   var zone=document.getElementById("cam-zone");
-
   if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){
-    info.textContent="Camera non disponible ici. Confirme manuellement.";
+    info.textContent="Camera non disponible. Confirme manuellement.";
     showManualConfirm(step);return;
   }
-
-  btnCam.disabled=true;btnCam.textContent="Activation...";
+  btn.disabled=true;btn.innerHTML="&#8987; Activation...";
   navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:"environment"}}})
   .then(function(stream){
     camStream=stream;
-    var vid=document.getElementById("cam-vid");
-    vid.srcObject=stream;zone.style.display="block";
-    btnCam.style.display="none";
-    info.textContent="Camera active ! Montre les couverts pendant 3 secondes...";
-    var count=3;
+    document.getElementById("cam-vid").srcObject=stream;
+    zone.style.display="block";btn.style.display="none";
+    info.textContent="Top ! Montre les couverts et reste immobile...";
+    var cw=document.getElementById("cam-circle-wrap");cw.style.display="flex";
+    var fg=document.getElementById("cam-fg");
+    var cnt=document.getElementById("cam-count");
+    var total=5,remaining=total;
+    var circ=2*Math.PI*28; // ~175.9
+    fg.style.strokeDasharray=circ;fg.style.strokeDashoffset=circ;
+    setTimeout(function(){
+      fg.style.transition="stroke-dashoffset 1s linear";
+    },50);
     camTimer=setInterval(function(){
-      count--;
-      if(count>0){info.textContent="Camera active ! Encore "+count+" seconde"+(count>1?"s":"")+"...";}
-      else{
+      remaining--;
+      cnt.textContent=remaining;
+      var progress=(total-remaining)/total;
+      fg.style.strokeDashoffset=circ*(1-progress);
+      if(remaining<=0){
         clearInterval(camTimer);camTimer=null;
         stopCam();zone.style.display="none";
         stepDone=true;
-        info.textContent="Couverts detectes ! Bien joue.";
+        info.textContent="Valide ! Les couverts ont ete detectes.";
         showFb("success",step.ok);showNext();
       }
     },1000);
   })
-  .catch(function(err){
-    btnCam.disabled=false;btnCam.innerHTML="&#128248; Demarrer la camera";
-    info.textContent="Acces camera refuse. Confirme manuellement ci-dessous.";
+  .catch(function(){
+    btn.disabled=false;btn.innerHTML="&#128248; Demarrer la camera";
+    info.textContent="Acces camera refuse. Confirme manuellement.";
     showManualConfirm(step);
   });
 }
 
 function showManualConfirm(step){
   if(document.getElementById("btn-manual"))return;
-  var btn=document.createElement("button");btn.className="btn";btn.id="btn-manual";
+  var btn=document.createElement("button");btn.className="btn green";btn.id="btn-manual";
   btn.textContent="J'ai pose les couverts cote a cote !";
-  btn.style.background="linear-gradient(135deg,#065f46,var(--vert))";
   btn.addEventListener("click",function(){
-    stepDone=true;
+    if(stepDone)return;
+    stepDone=true;btn.style.display="none";
     document.getElementById("cam-info").textContent="Valide ! Tu peux continuer.";
-    showFb("success",step.ok);showNext();btn.style.display="none";
+    showFb("success",steps[cur].ok);showNext();
   });
   document.getElementById("qbody").appendChild(btn);
 }
@@ -617,11 +682,7 @@ function stopCam(){
 }
 
 function showFb(type,msg){var fb=document.getElementById("fb");fb.className="fb "+type;fb.textContent=msg;}
-function showNext(){
-  var bn=document.getElementById("btn-next");
-  bn.style.display="block";
-  bn.innerHTML=cur<steps.length-1?"Etape suivante &#8594;":"Decouvrir ma surprise &#127881;";
-}
+function showNext(){document.getElementById("btn-next").style.display="block";}
 
 function launchConfetti(){
   var c=document.getElementById("confetti");
