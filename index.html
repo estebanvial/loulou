@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <title>Un message pour Loulou</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
@@ -51,7 +51,7 @@ input.correct{border-color:var(--vert)}input.wrong{border-color:var(--rouge);ani
 .fb.error{display:block;background:rgba(248,113,113,.08);border:1px solid rgba(248,113,113,.25);color:#FCA5A5}
 .fb.info{display:block;background:rgba(232,201,122,.08);border:1px solid rgba(232,201,122,.25);color:var(--or)}
 .btn{width:100%;padding:.95rem 1.4rem;background:linear-gradient(135deg,var(--bleu),var(--bc));border:none;border-radius:14px;color:white;font-family:"DM Sans",sans-serif;font-size:.95rem;font-weight:500;cursor:pointer;transition:all .2s ease;box-shadow:0 4px 20px rgba(59,111,232,.35);margin-top:.4rem}
-.btn:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(59,111,232,.45)}
+.btn:hover{transform:translateY(-2px)}
 .btn:active{transform:translateY(0)}
 .btn.pink{background:linear-gradient(135deg,#9333ea,#ec4899)}
 .btn.green{background:linear-gradient(135deg,#065f46,var(--vert))}
@@ -78,35 +78,40 @@ input.correct{border-color:var(--vert)}input.wrong{border-color:var(--rouge);ani
 .iitem.icorrect{border-color:var(--vert);background:rgba(74,222,128,.08)}
 .iitem.iwrong{border-color:var(--rouge);background:rgba(248,113,113,.08);animation:shake .4s ease}
 .iitem.irev{border-color:rgba(232,201,122,.5);background:rgba(232,201,122,.06);color:var(--or)}
-/* PUZZLE DRAG & DROP 2x2 */
-.puz-container{display:flex;gap:1.2rem;margin-bottom:1rem;align-items:flex-start}
-.puz-pieces{display:grid;grid-template-columns:1fr 1fr;gap:6px;flex:1}
-.puz-board{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:6px;flex:1;border:2px solid rgba(123,167,255,.2);border-radius:12px;padding:6px;background:rgba(0,0,0,.2)}
-.puz-piece{width:100%;aspect-ratio:1;border-radius:8px;overflow:hidden;cursor:grab;border:2px solid rgba(123,167,255,.2);transition:all .2s;position:relative;background:rgba(59,111,232,.1)}
-.puz-piece:active{cursor:grabbing;transform:scale(1.05);z-index:10;border-color:var(--or)}
-.puz-piece.dragging{opacity:.5;border-color:var(--or)}
-.puz-piece.placed{cursor:default;border-color:rgba(74,222,128,.4);background:rgba(74,222,128,.05)}
-.puz-piece img{width:200%;height:200%;object-fit:cover;display:block;pointer-events:none}
-.puz-slot{width:100%;aspect-ratio:1;border-radius:8px;border:2px dashed rgba(123,167,255,.25);background:rgba(0,0,0,.15);transition:all .2s;position:relative;display:flex;align-items:center;justify-content:center}
-.puz-slot.drag-over{border-color:var(--or);background:rgba(232,201,122,.08)}
-.puz-slot.filled{border-style:solid;border-color:rgba(74,222,128,.4)}
-.puz-slot .slot-num{font-size:.65rem;color:rgba(123,167,255,.4);font-weight:600}
-.puz-labels{display:flex;justify-content:space-between;font-size:.72rem;color:var(--gris);margin-bottom:.4rem}
-.puz-info{font-size:.78rem;color:var(--gris);text-align:center;margin-bottom:.8rem}
+/* PUZZLE */
+.puz-info{font-size:.78rem;color:var(--gris);text-align:center;margin-bottom:.6rem}
+.puz-labels{display:flex;justify-content:space-between;font-size:.7rem;color:var(--gris);margin-bottom:.35rem;padding:0 .2rem}
+.puz-container{display:flex;gap:1rem;margin-bottom:1rem;align-items:flex-start;touch-action:none}
+.puz-pieces{display:grid;grid-template-columns:1fr 1fr;gap:5px;flex:1}
+.puz-board{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:5px;flex:1;border:2px solid rgba(123,167,255,.2);border-radius:10px;padding:5px;background:rgba(0,0,0,.2)}
+.puz-piece{width:100%;aspect-ratio:1;border-radius:7px;overflow:hidden;border:2px solid rgba(123,167,255,.2);background:rgba(59,111,232,.1);cursor:grab;-webkit-user-select:none;user-select:none}
+.puz-piece.selected{border-color:var(--or);box-shadow:0 0 0 2px rgba(232,201,122,.4);transform:scale(1.04)}
+.puz-piece.placed{border-color:rgba(74,222,128,.4);background:rgba(74,222,128,.05);cursor:default}
+.puz-piece img{width:200%;height:200%;object-fit:cover;display:block;pointer-events:none;-webkit-user-drag:none}
+.puz-slot{width:100%;aspect-ratio:1;border-radius:7px;border:2px dashed rgba(123,167,255,.25);background:rgba(0,0,0,.15);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .15s}
+.puz-slot.highlight{border-color:var(--or);background:rgba(232,201,122,.08)}
+.puz-slot.filled{border-style:solid;border-color:rgba(74,222,128,.35);cursor:pointer}
+.puz-slot .sn{font-size:.6rem;color:rgba(123,167,255,.35);font-weight:600}
+.puz-slot-inner{width:100%;height:100%;overflow:hidden;border-radius:5px}
+.puz-slot-inner img{width:200%;height:200%;object-fit:cover;display:block;pointer-events:none;-webkit-user-drag:none}
 /* CAMERA */
 .cam-info{font-size:.85rem;color:var(--bc);text-align:center;margin-bottom:.8rem;min-height:1.4rem;line-height:1.4}
 .cam-zone{width:100%;aspect-ratio:4/3;border-radius:16px;overflow:hidden;background:#000;margin-bottom:.8rem;border:2px solid rgba(123,167,255,.2);position:relative;display:none}
 .cam-zone video{width:100%;height:100%;object-fit:cover}
-.cam-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;flex-direction:column;gap:.8rem}
-.cam-frame-box{width:55%;aspect-ratio:3/2;border:2px solid rgba(255,255,255,.7);border-radius:8px;box-shadow:0 0 0 9999px rgba(0,0,0,.4)}
-/* Circular progress */
-.cam-circle{width:72px;height:72px}
-.cam-circle circle{fill:none;stroke-width:6;stroke-linecap:round}
-.cam-circle .bg{stroke:rgba(255,255,255,.15)}
-.cam-circle .fg{stroke:var(--vert);stroke-dasharray:188;stroke-dashoffset:188;transition:stroke-dashoffset .9s linear;transform:rotate(-90deg);transform-origin:50% 50%}
-.cam-count{position:absolute;font-size:1.4rem;font-weight:700;color:white;top:50%;left:50%;transform:translate(-50%,-50%)}
-.cam-circle-wrap{position:relative;display:flex;align-items:center;justify-content:center}
-.cam-hint{font-size:.72rem;color:rgba(255,255,255,.55);text-align:center;padding:0 1rem}
+.cam-ov{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;flex-direction:column;gap:.7rem}
+.cam-frame-box{width:60%;aspect-ratio:4/3;border:2px solid rgba(255,255,255,.7);border-radius:8px;box-shadow:0 0 0 9999px rgba(0,0,0,.45)}
+.cam-cw{position:relative;display:flex;align-items:center;justify-content:center}
+.cam-svg{width:68px;height:68px}
+.cam-svg .bg{fill:none;stroke:rgba(255,255,255,.15);stroke-width:6}
+.cam-svg .fg{fill:none;stroke:var(--vert);stroke-width:6;stroke-linecap:round;stroke-dasharray:175.9;stroke-dashoffset:175.9;transform:rotate(-90deg);transform-origin:50% 50%;transition:stroke-dashoffset .95s linear}
+.cam-cnt{position:absolute;font-size:1.3rem;font-weight:700;color:white}
+.cam-hint{font-size:.7rem;color:rgba(255,255,255,.5);text-align:center;padding:0 1rem}
+/* AI analysis */
+.ai-preview{width:100%;border-radius:12px;overflow:hidden;margin-bottom:.8rem;display:none}
+.ai-preview img{width:100%;max-height:180px;object-fit:cover;display:block}
+.ai-thinking{text-align:center;padding:.8rem;font-size:.85rem;color:var(--bc);display:none}
+.ai-thinking span{display:inline-block;animation:dots 1.2s infinite}
+@keyframes dots{0%,100%{opacity:.3}50%{opacity:1}}
 /* FINALE */
 .fi{font-size:4rem;margin-bottom:1.4rem;display:block;animation:bounce 1s ease infinite}
 @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
@@ -226,19 +231,19 @@ var steps=[
    ok:"La Golf 4 ! La premiere voiture d'Esteban. Un classique.",
    ko:"C'est une voiture allemande tres connue... une Volkswagen !"},
   {cat:"special",type:"camera",emoji:"&#128248;",photo:null,
-   q:"Mini-defi ! Pose ta fourchette et ton couteau du midi cote a cote. Clique sur Demarrer et garde-les dans le cadre pendant 5 secondes.",
-   ok:"Couverts valides ! Tu peux continuer.",
+   q:"Mini-defi ! Pose ta fourchette ET ton couteau du midi cote a cote. Prends-les en photo, Claude va verifier que ce sont bien des couverts !",
+   ok:"Couverts confirmes par Claude ! Tu peux continuer.",
    ko:""},
   {cat:"special",type:"puzzle",emoji:"&#127922;",photo:null,
-   q:"Glisse les pieces dans les bonnes cases pour reconstituer le souvenir !",
+   q:"Remets les pieces dans le bon ordre pour reconstituer le souvenir !",
    ok:"Puzzle resolu ! Un beau souvenir a nous.",
    ko:""},
   {cat:"culture",type:"qcm",emoji:"&#9875;",photo:7,
-   q:"Vous regardez le live action One Piece. Dans la saison 2, quel arc est adapte ?",
-   opts:[{e:"&#127984;",t:"L'arc Baratie et Arlong Park"},{e:"&#127958;",t:"L'arc Alabasta"},{e:"&#127758;",t:"L'arc Loguetown"},{e:"&#127867;",t:"L'arc Whisky Peak"}],
-   ans:"L'arc Alabasta",
-   ok:"L'arc Alabasta - Vivi, le desert, et Crocodile. Un des meilleurs arcs !",
-   ko:"C'est l'arc avec une princesse, un desert et un Shichibukai comme antagoniste..."},
+   q:"Dans le live action One Piece saison 2, quel nouveau personnage rejoint l'equipage de Luffy ?",
+   opts:[{e:"&#9917;",t:"Vivi"},{e:"&#128298;",t:"Zoro"},{e:"&#128081;",t:"Chopper"},{e:"&#9878;",t:"Nami"}],
+   ans:"Chopper",
+   ok:"Chopper ! Le petit renne medecin qui rejoint l'equipage dans l'arc Drum Island.",
+   ko:"C'est un personnage tres mignon... un animal qui a mange un Fruit du Demon !"},
   {cat:"couple",type:"qcm",emoji:"&#127794;",photo:8,
    q:"Au Gros Chene en Alsace, vous vous etes perdus en foret apres un pique-nique. Comment s'appelait la joggeuse qui vous a aide a retrouver votre chemin ?",
    opts:[{e:"&#127939;",t:"Martine"},{e:"&#127939;",t:"Sandra"},{e:"&#127939;",t:"Sonia"},{e:"&#127939;",t:"Christine"}],
@@ -263,17 +268,17 @@ var steps=[
    ans:"2 ans",
    ok:"2 longues annees de distance... et vous avez tout surpasse.",
    ko:"C'etait long, mais moins que 3 ans et plus qu'un an !"},
-  {cat:"couple",type:"input",emoji:"&#127959;",photo:null,
-   q:"Derniere question ! Dans quel arrondissement de Paris se trouve le restaurant ou vous allez ce soir ?",
-   ans:"9",accepted:["9","09","75009","9eme","neuvieme"],
-   ok:"Le 9eme arrondissement, Pigalle... ta surprise t'attend la-bas !",
-   ko:"C'est dans le nord de Paris, cote Pigalle. Un chiffre entre 8 et 10 !"}
+  {cat:"couple",type:"qcm",emoji:"&#127843;",photo:null,
+   q:"Ce soir, tu vas manger des sushis a Paris pour notre anniversaire. Mais quel type de sushi etait le plat de notre premier rendez-vous au J&J a Tourcoing ?",
+   opts:[{e:"&#127843;",t:"Des makis classiques"},{e:"&#127843;",t:"Des sashimis"},{e:"&#127843;",t:"On a pris des sushis comme d'hab, comme toujours !"},{e:"&#127828;",t:"En fait c'etait des pizzas"}],
+   ans:"On a pris des sushis comme d'hab, comme toujours !",
+   ok:"Evidemment... des sushis ! Et ce soir ca recommence, mais a Paris. Bonne soiree Loulou &#128153;",
+   ko:"Rappelle-toi... c'est pour ca que la surprise de ce soir a du sens !"}
 ];
 
-var cur=0, tries=3, stepDone=false;
-var camStream=null, camTimer=null;
-var dragSrc=null;
-// Puzzle state: slotContents[slotIdx] = pieceIdx or null
+var cur=0,tries=3,stepDone=false;
+var camStream=null,camInterval=null;
+var puzSelected=null;
 var slotContents=[null,null,null,null];
 
 // STARS
@@ -301,7 +306,7 @@ document.getElementById("btn-next").addEventListener("click",function(){
 
 function renderStep(){
   var step=steps[cur];
-  tries=3;stepDone=false;
+  tries=3;stepDone=false;puzSelected=null;slotContents=[null,null,null,null];
   var pct=Math.round((cur/steps.length)*100);
   document.getElementById("pf").style.width=pct+"%";
   document.getElementById("slbl").textContent="Etape "+(cur+1)+" / "+steps.length;
@@ -312,7 +317,7 @@ function renderStep(){
   document.getElementById("qt").innerHTML="<span class='emo'>"+step.emoji+"</span>"+step.q;
   var fb=document.getElementById("fb");fb.className="fb";fb.textContent="";
   var bn=document.getElementById("btn-next");bn.style.display="none";
-  bn.innerHTML=cur<steps.length-1?"Etape suivante &#8594;":"Decouvrir ma surprise &#127881;";
+  bn.innerHTML=cur<steps.length-1?"Etape suivante &#8594;":"Voir ma surprise &#127881;";
   var phc=document.getElementById("phc");phc.innerHTML="";
   if(step.photo!==null&&step.photo!==undefined&&PHOTOS[step.photo]){
     var fr=document.createElement("div");fr.className="phf";
@@ -356,8 +361,7 @@ function checkQCM(btn,choice,step){
   if(stepDone)return;
   var all=document.querySelectorAll(".opt");
   if(choice===step.ans){
-    stepDone=true;
-    all.forEach(function(o){o.disabled=true;o.style.pointerEvents="none";});
+    stepDone=true;all.forEach(function(o){o.disabled=true;o.style.pointerEvents="none";});
     btn.classList.add("correct");showFb("success",step.ok);showNext();
   }else{
     tries--;btn.classList.add("wrong");btn.disabled=true;
@@ -392,8 +396,7 @@ function checkInput(step){
     var bc=document.querySelector("#qbody .btn");if(bc)bc.style.display="none";
     showFb("success",step.ok);showNext();
   }else{
-    tries--;inp.classList.add("wrong");
-    setTimeout(function(){inp.classList.remove("wrong");},400);
+    tries--;inp.classList.add("wrong");setTimeout(function(){inp.classList.remove("wrong");},400);
     renderTries(step);
     if(tries<=0){
       stepDone=true;inp.disabled=true;
@@ -427,238 +430,234 @@ function checkIntrus(div,choice,step){
     renderTries(step);
     if(tries<=0){
       stepDone=true;
-      all.forEach(function(d){
-        d.classList.add("idone");
-        var sp=d.querySelector("span:last-child");
-        if(sp&&sp.textContent===step.intrus)d.classList.add("irev");
-      });
+      all.forEach(function(d){d.classList.add("idone");var sp=d.querySelector("span:last-child");if(sp&&sp.textContent===step.intrus)d.classList.add("irev");});
       showFb("info","C'etait : "+step.intrus+" - Ca n'existe pas sur la ligne H !");showNext();
     }else showFb("error","Pas celle-la ! ("+tries+" essai"+(tries>1?"s":"")+" restant"+(tries>1?"s":"")+")");
   }
 }
 
-// ── PUZZLE DRAG & DROP 2x2 ────────────────────────────────────────────────
+// PUZZLE - tap/click based, no scroll conflict
 function buildPuzzle(step,body){
-  slotContents=[null,null,null,null];
-  dragSrc=null;
-
-  // Shuffled piece order
+  puzSelected=null;slotContents=[null,null,null,null];
   var order=[0,1,2,3].sort(function(){return Math.random()-.5;});
 
   var info=document.createElement("div");info.className="puz-info";info.id="puz-info";
-  info.textContent="Fais glisser les pieces dans les bonnes cases !";
+  info.textContent="Appuie sur une piece, puis sur la case cible pour la placer.";
   body.appendChild(info);
 
-  var labels=document.createElement("div");labels.className="puz-labels";
-  labels.innerHTML="<span>&#127922; Pieces a placer</span><span>&#128204; Cases cibles</span>";
-  body.appendChild(labels);
+  var lbl=document.createElement("div");lbl.className="puz-labels";
+  lbl.innerHTML="<span>&#127922; Pieces a placer</span><span>&#128204; Cases cibles</span>";
+  body.appendChild(lbl);
 
   var container=document.createElement("div");container.className="puz-container";
 
-  // PIECES ZONE
-  var piecesZone=document.createElement("div");piecesZone.className="puz-pieces";piecesZone.id="puz-pieces";
-  order.forEach(function(pieceIdx){
-    piecesZone.appendChild(makePiece(pieceIdx,step));
-  });
-  container.appendChild(piecesZone);
+  var pzone=document.createElement("div");pzone.className="puz-pieces";pzone.id="puz-pieces";
+  order.forEach(function(idx){pzone.appendChild(makePuzPiece(idx,step));});
+  container.appendChild(pzone);
 
-  // BOARD ZONE (slots)
   var board=document.createElement("div");board.className="puz-board";board.id="puz-board";
-  for(var s=0;s<4;s++){
-    board.appendChild(makeSlot(s,step));
-  }
+  for(var s=0;s<4;s++){board.appendChild(makePuzSlot(s,step));}
   container.appendChild(board);
   body.appendChild(container);
 
-  // Preview hint (tiny)
-  var hint=document.createElement("div");hint.style.cssText="font-size:.7rem;color:var(--gris);text-align:center;margin-top:.4rem";
-  hint.textContent="Ordre : haut-gauche, haut-droite, bas-gauche, bas-droite";
+  var hint=document.createElement("div");
+  hint.style.cssText="font-size:.68rem;color:var(--gris);text-align:center;margin-top:.3rem;opacity:.7";
+  hint.textContent="Ordre cible : haut-gauche | haut-droite | bas-gauche | bas-droite";
   body.appendChild(hint);
 }
 
-function makePiece(pieceIdx,step){
+function makePuzPiece(idx,step){
   var tile=document.createElement("div");
-  tile.className="puz-piece";
-  tile.id="piece-"+pieceIdx;
-  tile.draggable=true;
-  tile.dataset.piece=pieceIdx;
-  var row=Math.floor(pieceIdx/2),col=pieceIdx%2;
+  tile.className="puz-piece";tile.id="pp-"+idx;tile.dataset.idx=idx;
+  var row=Math.floor(idx/2),col=idx%2;
   var img=document.createElement("img");img.src=PIMG;
-  img.style.cssText="width:200%;height:200%;margin-left:"+(-col*100)+"%;margin-top:"+(-row*100)+"%;pointer-events:none";
+  img.style.cssText="width:200%;height:200%;margin-left:"+(-col*100)+"%;margin-top:"+(-row*100)+"%";
   tile.appendChild(img);
-  // Desktop drag
-  tile.addEventListener("dragstart",function(e){
-    dragSrc={type:"piece",idx:pieceIdx};
-    e.dataTransfer.effectAllowed="move";
-    setTimeout(function(){tile.classList.add("dragging");},0);
-  });
-  tile.addEventListener("dragend",function(){tile.classList.remove("dragging");});
-  // Touch support
-  tile.addEventListener("touchstart",function(e){dragSrc={type:"piece",idx:pieceIdx};tile.classList.add("dragging");},false);
-  tile.addEventListener("touchend",function(e){
-    tile.classList.remove("dragging");
-    var t=e.changedTouches[0];
-    var el=document.elementFromPoint(t.clientX,t.clientY);
-    if(el){var slot=el.closest(".puz-slot");if(slot)dropOnSlot(parseInt(slot.dataset.slot),step);}
-  },false);
+  tile.addEventListener("click",function(e){e.stopPropagation();selectPiece(idx,step);});
   return tile;
 }
 
-function makeSlot(slotIdx,step){
+function makePuzSlot(sIdx,step){
   var slot=document.createElement("div");
-  slot.className="puz-slot";slot.id="slot-"+slotIdx;slot.dataset.slot=slotIdx;
-  var num=document.createElement("span");num.className="slot-num";num.textContent=(slotIdx+1);slot.appendChild(num);
-  slot.addEventListener("dragover",function(e){e.preventDefault();slot.classList.add("drag-over");});
-  slot.addEventListener("dragleave",function(){slot.classList.remove("drag-over");});
-  slot.addEventListener("drop",function(e){
-    e.preventDefault();slot.classList.remove("drag-over");
-    dropOnSlot(slotIdx,step);
-  });
+  slot.className="puz-slot";slot.id="ps-"+sIdx;slot.dataset.slot=sIdx;
+  var sn=document.createElement("span");sn.className="sn";sn.textContent=(sIdx+1);slot.appendChild(sn);
+  slot.addEventListener("click",function(e){e.stopPropagation();placeInSlot(sIdx,step);});
   return slot;
 }
 
-function dropOnSlot(slotIdx,step){
-  if(!dragSrc)return;
-  if(slotContents[slotIdx]!==null){
-    // Swap back piece to pieces zone
-    returnPiece(slotContents[slotIdx]);
+function selectPiece(idx,step){
+  if(stepDone)return;
+  // If clicking a placed piece, unplace it first
+  var inSlot=-1;
+  slotContents.forEach(function(v,i){if(v===idx)inSlot=i;});
+  if(inSlot>=0){
+    unplaceFromSlot(inSlot,step);return;
   }
-  // If dragging from another slot
-  if(dragSrc.type==="slot"){
-    slotContents[dragSrc.idx]=null;
-    var oldSlot=document.getElementById("slot-"+dragSrc.idx);
-    if(oldSlot){oldSlot.innerHTML="";var n=document.createElement("span");n.className="slot-num";n.textContent=(dragSrc.idx+1);oldSlot.appendChild(n);oldSlot.classList.remove("filled");}
+  // Deselect previous
+  if(puzSelected!==null){
+    var prev=document.getElementById("pp-"+puzSelected);
+    if(prev)prev.classList.remove("selected");
   }
-  // Place piece in slot
-  slotContents[slotIdx]=dragSrc.idx;
-  var pieceEl=document.getElementById("piece-"+dragSrc.idx);
-  if(pieceEl)pieceEl.parentNode.removeChild(pieceEl);
-  var slot=document.getElementById("slot-"+slotIdx);
+  puzSelected=idx;
+  var el=document.getElementById("pp-"+idx);
+  if(el)el.classList.add("selected");
+  document.getElementById("puz-info").textContent="Piece selectionnee ! Clique sur une case pour la placer.";
+  // Highlight empty slots
+  for(var s=0;s<4;s++){
+    var slot=document.getElementById("ps-"+s);
+    if(slot&&slotContents[s]===null)slot.classList.add("highlight");
+  }
+}
+
+function placeInSlot(sIdx,step){
+  if(stepDone)return;
+  if(puzSelected===null){
+    // If slot has a piece, select it for moving
+    if(slotContents[sIdx]!==null){
+      var idx=slotContents[sIdx];
+      unplaceFromSlot(sIdx,step);
+      // Don't auto-select after unplace to avoid confusion
+    }
+    return;
+  }
+  // Clear highlights
+  for(var s=0;s<4;s++){var sl=document.getElementById("ps-"+s);if(sl)sl.classList.remove("highlight");}
+
+  // If slot already has a piece, swap
+  if(slotContents[sIdx]!==null){
+    var existing=slotContents[sIdx];
+    // Return existing piece to pzone
+    var pzone=document.getElementById("puz-pieces");
+    if(pzone){pzone.appendChild(makePuzPiece(existing,step));}
+    slotContents[sIdx]=null;
+    var sl2=document.getElementById("ps-"+sIdx);
+    if(sl2){sl2.innerHTML="";var sn=document.createElement("span");sn.className="sn";sn.textContent=(sIdx+1);sl2.appendChild(sn);sl2.classList.remove("filled");}
+  }
+
+  // Remove piece from pzone
+  var el=document.getElementById("pp-"+puzSelected);if(el)el.parentNode.removeChild(el);
+  slotContents[sIdx]=puzSelected;
+
+  // Fill slot with piece image
+  var slot=document.getElementById("ps-"+sIdx);
   if(slot){
     slot.innerHTML="";
-    var clone=makePieceInSlot(dragSrc.idx,slotIdx,step);
-    slot.appendChild(clone);slot.classList.add("filled");
+    var inner=document.createElement("div");inner.className="puz-slot-inner";
+    var row=Math.floor(puzSelected/2),col=puzSelected%2;
+    var img=document.createElement("img");img.src=PIMG;
+    img.style.cssText="width:200%;height:200%;margin-left:"+(-col*100)+"%;margin-top:"+(-row*100)+"%";
+    inner.appendChild(img);slot.appendChild(inner);slot.classList.add("filled");
+    // Click to unplace
+    slot.addEventListener("click",function(e){e.stopPropagation();placeInSlot(sIdx,step);});
   }
-  dragSrc=null;
+  puzSelected=null;
+  document.getElementById("puz-info").textContent="Bien place ! Continue.";
   checkPuzzleDone(step);
 }
 
-function makePieceInSlot(pieceIdx,slotIdx,step){
-  var tile=document.createElement("div");
-  tile.style.cssText="width:100%;height:100%;overflow:hidden;border-radius:6px;cursor:grab";
-  tile.dataset.piece=pieceIdx;
-  var row=Math.floor(pieceIdx/2),col=pieceIdx%2;
-  var img=document.createElement("img");img.src=PIMG;
-  img.style.cssText="width:200%;height:200%;margin-left:"+(-col*100)+"%;margin-top:"+(-row*100)+"%;pointer-events:none;display:block";
-  tile.appendChild(img);
-  // Can drag back out
-  tile.draggable=true;
-  tile.addEventListener("dragstart",function(e){
-    dragSrc={type:"slot",idx:slotIdx};
-    e.dataTransfer.effectAllowed="move";
-    setTimeout(function(){tile.style.opacity=".4";},0);
-  });
-  tile.addEventListener("dragend",function(){tile.style.opacity="1";});
-  // Touch
-  tile.addEventListener("touchstart",function(e){dragSrc={type:"slot",idx:slotIdx};tile.style.opacity=".4";},false);
-  tile.addEventListener("touchend",function(e){
-    tile.style.opacity="1";
-    var t=e.changedTouches[0];
-    var el=document.elementFromPoint(t.clientX,t.clientY);
-    if(el){var sl=el.closest(".puz-slot");if(sl)dropOnSlot(parseInt(sl.dataset.slot),step);else{returnPiece(pieceIdx);slotContents[slotIdx]=null;var s2=document.getElementById("slot-"+slotIdx);if(s2){s2.innerHTML="";var n=document.createElement("span");n.className="slot-num";n.textContent=(slotIdx+1);s2.appendChild(n);s2.classList.remove("filled");}}}
-    dragSrc=null;
-  },false);
-  return tile;
-}
-
-function returnPiece(pieceIdx){
-  var pz=document.getElementById("puz-pieces");
-  if(pz&&!document.getElementById("piece-"+pieceIdx)){
-    pz.appendChild(makePiece(pieceIdx,steps[cur]));
-  }
+function unplaceFromSlot(sIdx,step){
+  var idx=slotContents[sIdx];
+  slotContents[sIdx]=null;
+  var slot=document.getElementById("ps-"+sIdx);
+  if(slot){slot.innerHTML="";var sn=document.createElement("span");sn.className="sn";sn.textContent=(sIdx+1);slot.appendChild(sn);slot.classList.remove("filled","highlight");
+    slot.addEventListener("click",function(e){e.stopPropagation();placeInSlot(sIdx,step);});}
+  var pzone=document.getElementById("puz-pieces");
+  if(pzone&&!document.getElementById("pp-"+idx)){pzone.appendChild(makePuzPiece(idx,step));}
+  puzSelected=null;
+  for(var s=0;s<4;s++){var sl=document.getElementById("ps-"+s);if(sl)sl.classList.remove("highlight");}
+  document.getElementById("puz-info").textContent="Piece replacee dans la zone. Choisis une autre case !";
 }
 
 function checkPuzzleDone(step){
-  var allFilled=slotContents.every(function(v){return v!==null;});
+  var filled=slotContents.filter(function(v){return v!==null;}).length;
+  if(filled<4){document.getElementById("puz-info").textContent=filled+" piece"+(filled>1?"s":"")+" placee"+(filled>1?"s":"")+" sur 4.";return;}
   var correct=slotContents.every(function(v,i){return v===i;});
-  if(allFilled){
-    if(correct){
-      stepDone=true;
-      document.getElementById("puz-info").textContent="Parfait ! La photo est reconstituee.";
-      showFb("success",step.ok);showNext();
-    }else{
-      var rightCount=slotContents.filter(function(v,i){return v===i;}).length;
-      document.getElementById("puz-info").textContent=rightCount+" piece"+(rightCount>1?"s":"")+" bien placee"+(rightCount>1?"s":"")+" sur 4. Pas tout a fait !";
-      showFb("error","Pas encore ! Essaie de repositionner les pieces.");
-    }
+  if(correct){stepDone=true;document.getElementById("puz-info").textContent="Parfait !";showFb("success",step.ok);showNext();}
+  else{
+    var rightCount=slotContents.filter(function(v,i){return v===i;}).length;
+    document.getElementById("puz-info").textContent=rightCount+" piece"+(rightCount>1?"s":"")+" bien placee"+(rightCount>1?"s":"")+" sur 4. Pas tout a fait !";
+    showFb("error","Pas encore ! Essaie de repositionner les pieces.");
   }
 }
 
-// ── CAMERA ──────────────────────────────────────────────────────────────────
+// CAMERA avec analyse IA via Claude API
 function buildCamera(step,body){
   var info=document.createElement("div");info.className="cam-info";info.id="cam-info";
-  info.textContent="Appuie sur Demarrer pour activer la camera.";body.appendChild(info);
+  info.textContent="Pose ta fourchette et ton couteau cote a cote, puis prends-les en photo.";body.appendChild(info);
 
-  var zone=document.createElement("div");zone.className="cam-zone";zone.id="cam-zone";
-  var vid=document.createElement("video");vid.id="cam-vid";vid.autoplay=true;vid.playsInline=true;vid.muted=true;
-  zone.appendChild(vid);
+  var preview=document.createElement("div");preview.className="ai-preview";preview.id="ai-preview";
+  var previewImg=document.createElement("img");previewImg.id="ai-img";preview.appendChild(previewImg);
+  body.appendChild(preview);
 
-  // Overlay with frame + circle progress
-  var ov=document.createElement("div");ov.className="cam-overlay";
-  var fr=document.createElement("div");fr.className="cam-frame-box";ov.appendChild(fr);
-  var cw=document.createElement("div");cw.className="cam-circle-wrap";
-  cw.innerHTML='<svg class="cam-circle" viewBox="0 0 64 64"><circle class="bg" cx="32" cy="32" r="28"/><circle class="fg" id="cam-fg" cx="32" cy="32" r="28"/></svg><span class="cam-count" id="cam-count">5</span>';
-  cw.style.display="none";cw.id="cam-circle-wrap";ov.appendChild(cw);
-  var hint=document.createElement("div");hint.className="cam-hint";hint.textContent="Centre fourchette + couteau dans le cadre";ov.appendChild(hint);
-  zone.appendChild(ov);body.appendChild(zone);
+  var thinking=document.createElement("div");thinking.className="ai-thinking";thinking.id="ai-thinking";
+  thinking.innerHTML="Claude analyse la photo<span>...</span>";body.appendChild(thinking);
 
-  var btnCam=document.createElement("button");btnCam.className="btn pink";btnCam.id="btn-cam";
-  btnCam.innerHTML="&#128248; Demarrer la camera";
-  btnCam.addEventListener("click",function(){startCam(step);});
-  body.appendChild(btnCam);
+  // Hidden file input for photo capture
+  var fileInput=document.createElement("input");fileInput.type="file";fileInput.accept="image/*";
+  fileInput.capture="environment";fileInput.id="cam-file";fileInput.style.display="none";
+  fileInput.addEventListener("change",function(){handlePhoto(fileInput,step);});
+  body.appendChild(fileInput);
+
+  var btnPhoto=document.createElement("button");btnPhoto.className="btn pink";btnPhoto.id="btn-cam";
+  btnPhoto.innerHTML="&#128248; Prendre une photo";
+  btnPhoto.addEventListener("click",function(){fileInput.click();});
+  body.appendChild(btnPhoto);
 }
 
-function startCam(step){
-  var btn=document.getElementById("btn-cam");
-  var info=document.getElementById("cam-info");
-  var zone=document.getElementById("cam-zone");
-  if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){
-    info.textContent="Camera non disponible. Confirme manuellement.";
-    showManualConfirm(step);return;
-  }
-  btn.disabled=true;btn.innerHTML="&#8987; Activation...";
-  navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:"environment"}}})
-  .then(function(stream){
-    camStream=stream;
-    document.getElementById("cam-vid").srcObject=stream;
-    zone.style.display="block";btn.style.display="none";
-    info.textContent="Top ! Montre les couverts et reste immobile...";
-    var cw=document.getElementById("cam-circle-wrap");cw.style.display="flex";
-    var fg=document.getElementById("cam-fg");
-    var cnt=document.getElementById("cam-count");
-    var total=5,remaining=total;
-    var circ=2*Math.PI*28; // ~175.9
-    fg.style.strokeDasharray=circ;fg.style.strokeDashoffset=circ;
-    setTimeout(function(){
-      fg.style.transition="stroke-dashoffset 1s linear";
-    },50);
-    camTimer=setInterval(function(){
-      remaining--;
-      cnt.textContent=remaining;
-      var progress=(total-remaining)/total;
-      fg.style.strokeDashoffset=circ*(1-progress);
-      if(remaining<=0){
-        clearInterval(camTimer);camTimer=null;
-        stopCam();zone.style.display="none";
-        stepDone=true;
-        info.textContent="Valide ! Les couverts ont ete detectes.";
-        showFb("success",step.ok);showNext();
-      }
-    },1000);
+function handlePhoto(fileInput,step){
+  if(!fileInput.files||!fileInput.files[0])return;
+  var file=fileInput.files[0];
+  var reader=new FileReader();
+  reader.onload=function(e){
+    var b64=e.target.result; // data:image/...;base64,...
+    var preview=document.getElementById("ai-preview");
+    var img=document.getElementById("ai-img");
+    img.src=b64;preview.style.display="block";
+    document.getElementById("cam-info").textContent="Photo prise ! Claude verifie...";
+    document.getElementById("btn-cam").style.display="none";
+    document.getElementById("ai-thinking").style.display="block";
+    analyzeWithClaude(b64,step);
+  };
+  reader.readAsDataURL(file);
+}
+
+function analyzeWithClaude(dataUrl,step){
+  var parts=dataUrl.split(",");
+  var mediaType=parts[0].split(":")[1].split(";")[0];
+  var b64data=parts[1];
+  fetch("https://api.anthropic.com/v1/messages",{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({
+      model:"claude-sonnet-4-20250514",
+      max_tokens:100,
+      messages:[{
+        role:"user",
+        content:[
+          {type:"image",source:{type:"base64",media_type:mediaType,data:b64data}},
+          {type:"text",text:"Reponds uniquement par OUI ou NON. Est-ce que cette image montre clairement une fourchette ET un couteau poses ensemble ?"}
+        ]
+      }]
+    })
+  })
+  .then(function(r){return r.json();})
+  .then(function(data){
+    document.getElementById("ai-thinking").style.display="none";
+    var text=data.content&&data.content[0]?data.content[0].text:"NON";
+    if(text.toUpperCase().indexOf("OUI")!==-1){
+      stepDone=true;
+      document.getElementById("cam-info").textContent="Claude confirme : fourchette + couteau detectes !";
+      showFb("success",step.ok);showNext();
+    }else{
+      document.getElementById("cam-info").textContent="Claude ne voit pas les deux couverts. Reessaie !";
+      document.getElementById("btn-cam").style.display="block";
+      document.getElementById("btn-cam").innerHTML="&#128248; Reprendre une photo";
+      document.getElementById("ai-preview").style.display="none";
+    }
   })
   .catch(function(){
-    btn.disabled=false;btn.innerHTML="&#128248; Demarrer la camera";
-    info.textContent="Acces camera refuse. Confirme manuellement.";
+    document.getElementById("ai-thinking").style.display="none";
+    document.getElementById("cam-info").textContent="Erreur reseau. Confirme manuellement.";
     showManualConfirm(step);
   });
 }
@@ -666,11 +665,10 @@ function startCam(step){
 function showManualConfirm(step){
   if(document.getElementById("btn-manual"))return;
   var btn=document.createElement("button");btn.className="btn green";btn.id="btn-manual";
-  btn.textContent="J'ai pose les couverts cote a cote !";
+  btn.textContent="J'ai bien pose les couverts cote a cote !";
   btn.addEventListener("click",function(){
-    if(stepDone)return;
-    stepDone=true;btn.style.display="none";
-    document.getElementById("cam-info").textContent="Valide ! Tu peux continuer.";
+    if(stepDone)return;stepDone=true;btn.style.display="none";
+    document.getElementById("cam-info").textContent="Valide !";
     showFb("success",steps[cur].ok);showNext();
   });
   document.getElementById("qbody").appendChild(btn);
@@ -678,7 +676,7 @@ function showManualConfirm(step){
 
 function stopCam(){
   if(camStream){camStream.getTracks().forEach(function(t){t.stop();});camStream=null;}
-  if(camTimer){clearInterval(camTimer);camTimer=null;}
+  if(camInterval){clearInterval(camInterval);camInterval=null;}
 }
 
 function showFb(type,msg){var fb=document.getElementById("fb");fb.className="fb "+type;fb.textContent=msg;}
